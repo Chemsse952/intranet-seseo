@@ -21,6 +21,11 @@
             height: 100vh;
             padding: 1rem;
             position: fixed;
+            transition: transform 0.3s ease;
+            transform: translateX(0);
+        }
+        .sidebar.closed {
+            transform: translateX(-100%);
         }
         .sidebar h2 {
             margin: 0;
@@ -44,6 +49,10 @@
             margin-left: 260px;
             padding: 2rem;
             width: 100%;
+            transition: margin-left 0.3s ease;
+        }
+        .main-content.full-width {
+            margin-left: 0;
         }
         .header {
             background-color: #fff;
@@ -55,6 +64,12 @@
         }
         .header img {
             height: 50px;
+        }
+        .header button.menu-toggle {
+            display: none;
+            background-color: transparent;
+            border: none;
+            font-size: 1.5rem;
         }
         .profile-section {
             display: flex;
@@ -143,6 +158,26 @@
         .account-details button:hover {
             background-color: #0056b3;
         }
+
+        @media (max-width: 768px) {
+            .header button.menu-toggle {
+                display: block;
+            }
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 1rem;
+            }
+            .profile-section {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
@@ -157,8 +192,9 @@
             <li><a href="#">Détails du compte</a></li>
         </ul>
     </div>
-    <div class="main-content">
+    <div class="main-content full-width">
         <div class="header">
+            <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
             <img src="images/logo.png" alt="Logo SESEO FORMATION">
             <div>
                 <button onclick="logout()">Déconnexion</button>
@@ -203,6 +239,34 @@
     <script>
         function logout() {
             window.location.href = "login.html";
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            const mainContent = document.querySelector('.main-content');
+            sidebar.classList.toggle('closed');
+            mainContent.classList.toggle('full-width');
+        }
+
+        // Automatically close the sidebar on small screens
+        window.addEventListener('resize', function() {
+            const sidebar = document.querySelector('.sidebar');
+            const mainContent = document.querySelector('.main-content');
+            if (window.innerWidth <= 768) {
+                sidebar.classList.add('closed');
+                mainContent.classList.add('full-width');
+            } else {
+                sidebar.classList.remove('closed');
+                mainContent.classList.remove('full-width');
+            }
+        });
+
+        // Initial check
+        if (window.innerWidth <= 768) {
+            const sidebar = document.querySelector('.sidebar');
+            const mainContent = document.querySelector('.main-content');
+            sidebar.classList.add('closed');
+            mainContent.classList.add('full-width');
         }
     </script>
 </body>
