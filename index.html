@@ -23,6 +23,7 @@
             position: fixed;
             transition: transform 0.3s ease;
             transform: translateX(0);
+            z-index: 1000;
         }
         .sidebar.closed {
             transform: translateX(-100%);
@@ -166,6 +167,9 @@
             .sidebar {
                 transform: translateX(-100%);
             }
+            .sidebar.open {
+                transform: translateX(0);
+            }
             .main-content {
                 margin-left: 0;
                 padding: 1rem;
@@ -192,7 +196,7 @@
             <li><a href="#">Détails du compte</a></li>
         </ul>
     </div>
-    <div class="main-content full-width">
+    <div class="main-content">
         <div class="header">
             <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
             <img src="images/logo.png" alt="Logo SESEO FORMATION">
@@ -243,31 +247,35 @@
 
         function toggleSidebar() {
             const sidebar = document.querySelector('.sidebar');
-            const mainContent = document.querySelector('.main-content');
-            sidebar.classList.toggle('closed');
-            mainContent.classList.toggle('full-width');
+            sidebar.classList.toggle('open');
         }
 
         // Automatically close the sidebar on small screens
         window.addEventListener('resize', function() {
             const sidebar = document.querySelector('.sidebar');
-            const mainContent = document.querySelector('.main-content');
             if (window.innerWidth <= 768) {
                 sidebar.classList.add('closed');
-                mainContent.classList.add('full-width');
             } else {
                 sidebar.classList.remove('closed');
-                mainContent.classList.remove('full-width');
+                sidebar.classList.remove('open');
             }
         });
 
-        // Initial check
-        if (window.innerWidth <= 768) {
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.innerWidth <= 768) {
+                const sidebar = document.querySelector('.sidebar');
+                sidebar.classList.add('closed');
+            }
+        });
+
+        document.addEventListener('click', function(event) {
             const sidebar = document.querySelector('.sidebar');
-            const mainContent = document.querySelector('.main-content');
-            sidebar.classList.add('closed');
-            mainContent.classList.add('full-width');
-        }
+            const menuToggle = document.querySelector('.menu-toggle');
+            if (window.innerWidth <= 768 && !sidebar.contains(event.target) && event.target !== menuToggle) {
+                sidebar.classList.add('closed');
+                sidebar.classList.remove('open');
+            }
+        });
     </script>
 </body>
 </html>
