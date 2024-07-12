@@ -72,6 +72,15 @@
             border: none;
             font-size: 1.5rem;
         }
+        .header button.logout {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
         .profile-section {
             display: flex;
             align-items: center;
@@ -118,11 +127,7 @@
         .grid-item a {
             color: #007BFF;
             text-decoration: none;
-            font-weight: bold;
-            transition: color 0.3s;
-        }
-        .grid-item a:hover {
-            color: #0056b3;
+            font-weight: 500;
         }
         .account-details {
             background-color: #fff;
@@ -136,20 +141,20 @@
         }
         .account-details label {
             display: block;
-            margin: 0.5rem 0 0.25rem;
-            font-weight: bold;
+            margin: 1rem 0 0.5rem;
         }
         .account-details input {
             width: 100%;
-            padding: 0.5rem;
+            padding: 0.75rem;
             border: 1px solid #ccc;
             border-radius: 4px;
             margin-bottom: 1rem;
         }
         .account-details button {
+            width: 100%;
+            padding: 0.75rem;
             background-color: #007BFF;
             color: #fff;
-            padding: 0.75rem 1.5rem;
             border: none;
             border-radius: 4px;
             cursor: pointer;
@@ -159,11 +164,7 @@
         .account-details button:hover {
             background-color: #0056b3;
         }
-
         @media (max-width: 768px) {
-            .header button.menu-toggle {
-                display: block;
-            }
             .sidebar {
                 transform: translateX(-100%);
             }
@@ -172,14 +173,9 @@
             }
             .main-content {
                 margin-left: 0;
-                padding: 1rem;
             }
-            .profile-section {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .grid {
-                grid-template-columns: 1fr;
+            .header button.menu-toggle {
+                display: block;
             }
         }
     </style>
@@ -200,6 +196,7 @@
         <div class="header">
             <img src="images/logo.png" alt="Logo SESEO FORMATION">
             <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+            <button class="logout" onclick="logout()">Déconnexion</button>
         </div>
         <div class="profile-section">
             <img src="https://via.placeholder.com/100" alt="Profile Picture">
@@ -242,6 +239,10 @@
         function toggleSidebar() {
             const sidebar = document.querySelector('.sidebar');
             sidebar.classList.toggle('open');
+        }
+
+        function logout() {
+            window.location.href = 'login.html';
         }
 
         document.addEventListener('DOMContentLoaded', function() {
